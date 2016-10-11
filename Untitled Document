@@ -1,0 +1,88 @@
+<head>
+  <title>image_share</title>
+</head>
+
+<body>
+<nav class="navbar navbar-default navbar-fixed-top">
+<div class="container">
+{{> loginButtons}}
+
+</div>
+
+</nav>
+
+
+
+  <div class="container">
+  <h1>Welcome to MyMeteor Learning! Hello {{username}}</h1>
+{{> image_add_form}}
+ 
+ {{> images}}
+</div>
+</body>
+
+
+<template name="image_add_form">
+
+<!-- Modal -->
+<div id="image_add_modal_form" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Add Images</h4>
+      </div>
+      <div class="modal-body">
+        
+	<form class="js-save-img">
+			<input type="text" name="img_src"/>
+			<input type="text" name="img_alt"/>
+			<button name="submit" class="btn btn-success">save</button>
+	</form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</template>
+
+
+
+
+<template name="images">
+{{#if currentUser}}
+<button class="show-image-float-form btn btn-success">Add more images</button>
+{{/if}}
+{{#if images_filtered}}
+<h3>Images are filtered by user {{filtered_user}}. <a href="#" class="js-unset-image-filter">remove filter</a></h3>
+{{/if}}
+	<div class="row">
+  {{#each images}}
+  <div class="col-xs-12 col-md-3">
+  	<div class="thumbnail" id={{_id}} >
+
+  	 	<img class="js-image" src="{{img_src}}" 
+  		alt="{{img_alt}}"/> 
+
+
+  <button class="js-img-del btn btn-warning"> delete</button>
+  		<div class="caption">
+
+        	<h3>Rating:{{rating}}</h3>
+        	<p>{{img_alt}}</p>
+		<p>User:<a href="#" class="js-set-image-filter">{{getUser createdBy}}</a></p>
+{{>starsRating mutable=true class="js-img-star-rating" id=_id}}
+		     	
+</div>
+     </div>
+    </div> <!-- / col -->
+  {{/each}}
+</div> <!-- / row -->
+  </template>
